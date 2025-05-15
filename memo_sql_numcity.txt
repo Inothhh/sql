@@ -1,0 +1,118 @@
+
+============================================================
+Mémo SQL - Projet NumCity
+============================================================
+
+Objectifs :
+-----------
+- Se familiariser avec les requêtes SQL de base.
+- Savoir insérer, mettre à jour, supprimer et interroger des données.
+- Comprendre les jointures et fonctions d’agrégation.
+- Maîtriser le scripting SQL pour exploiter une base relationnelle.
+
+------------------------------------------------------------
+1. INSERT (Ajout de données)
+------------------------------------------------------------
+Syntaxe :
+INSERT INTO nom_table (col1, col2, ...) VALUES (val1, val2, ...);
+
+Insertion multiple :
+INSERT INTO nom_table (col1, col2) VALUES
+(val1, val2),
+(val3, val4);
+
+Valeur par défaut :
+INSERT INTO table (col1, col2) VALUES (DEFAULT, val2);
+
+Exercice :
+- Tester INSERT avec des données complètes et incomplètes.
+- Ex. utilisateurs avec ou sans email.
+- Vérifier les contraintes (NOT NULL, DEFAULT).
+
+------------------------------------------------------------
+2. UPDATE (Modification de données)
+------------------------------------------------------------
+Syntaxe :
+UPDATE nom_table SET col1 = val1 WHERE condition;
+
+Exemples :
+UPDATE Stations SET nombre_places = 25 WHERE nom = 'Station Centre';
+UPDATE Stations SET type_station = 'parking' WHERE id_station = 2;
+
+Exercice :
+- Modifier un lieu (ex : coordonnées ou type).
+- Mettre à jour plusieurs colonnes avec une seule requête.
+- Expliquer pourquoi la modification a du sens.
+
+------------------------------------------------------------
+3. DELETE (Suppression de données)
+------------------------------------------------------------
+Syntaxe :
+DELETE FROM nom_table WHERE condition;
+
+Option avancée (PostgreSQL) :
+DELETE FROM table WHERE condition RETURNING *;
+
+Exercice :
+- Supprimer un lieu ou un utilisateur inactif.
+- S'assurer que les relations sont respectées.
+- Utiliser RETURNING si possible pour valider la suppression.
+
+------------------------------------------------------------
+4. SELECT (Interrogation des données)
+------------------------------------------------------------
+Syntaxe :
+SELECT colonne1, colonne2 FROM table WHERE condition;
+
+Options :
+- SELECT * : toutes les colonnes
+- Fonctions : COUNT(), AVG(), MAX(), MIN()
+- Aliases : SELECT col AS "Nom" ...
+- ORDER BY, GROUP BY, LIMIT
+
+Exemples :
+SELECT * FROM Stations;
+SELECT nom FROM Stations WHERE type_station = 'recharge' AND nombre_places > 10;
+
+Exercice :
+- Afficher les lieux à faible capacité (< 5).
+- Lieux proposés par un utilisateur spécifique.
+
+------------------------------------------------------------
+5. JOIN (Jointures entre tables)
+------------------------------------------------------------
+Syntaxe :
+SELECT A.col1, B.col2 FROM A
+JOIN B ON A.id = B.id;
+
+Exemple :
+SELECT u.nom, l.type_lieu FROM lieu l
+JOIN utilisateur u ON l.propose_par = u.id_utilisateur;
+
+Exercice :
+- Trouver les utilisateurs ayant proposé un lieu.
+- Associer lieu, zone et équipements via jointure.
+
+------------------------------------------------------------
+6. GROUP BY et Agrégations
+------------------------------------------------------------
+Syntaxe :
+SELECT col, COUNT(*) FROM table GROUP BY col;
+
+Exemples :
+SELECT type_lieu, COUNT(*) AS nb FROM lieu GROUP BY type_lieu;
+SELECT propose_par, COUNT(*) FROM lieu GROUP BY propose_par;
+
+Exercice :
+- Nombre de lieux par utilisateur.
+- Moyenne ou total de lieux par type ou zone.
+
+------------------------------------------------------------
+Conseils :
+------------------------------------------------------------
+✔ Toujours tester les requêtes avec une condition (WHERE)
+✔ Sauvegarder régulièrement la base avant des DELETE / UPDATE
+✔ Utiliser des vues ou des sous-requêtes pour simplifier
+✔ Nommer les colonnes avec des alias pour la lisibilité
+
+Fin du mémo - Que la Force du SQL soit avec toi, citoyen de NumCity 🚀
